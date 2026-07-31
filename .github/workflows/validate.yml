@@ -1,0 +1,35 @@
+name: Validate lab files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Bicep, shell, and evidence checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Bicep
+        run: |
+          az bicep install
+          az bicep build --file infra/main.bicep --outfile /tmp/main.json
+
+      - name: Install ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes shellcheck
+
+      - name: Check shell scripts
+        run: shellcheck scripts/*.sh validation/*.sh
+
+      - name: Scan committed evidence for common identifiers
+        run: bash scripts/check-evidence-redaction.sh

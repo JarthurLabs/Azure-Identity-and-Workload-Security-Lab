@@ -1,0 +1,12 @@
+// Use only if Entra sign-in logs are connected to this workspace.
+// Review report-only Conditional Access evaluation without exposing user names.
+SigninLogs
+| where TimeGenerated > ago(24h)
+| extend ReportOnlyPolicies = parse_json(AppliedConditionalAccessPolicies)
+| project
+    TimeGenerated,
+    ResultType,
+    AuthenticationRequirement,
+    ConditionalAccessStatus,
+    ReportOnlyPolicies
+| order by TimeGenerated desc

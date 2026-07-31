@@ -1,0 +1,11 @@
+// Use only if Entra audit logs are connected to this workspace.
+// Focus on lab group changes and omit actor/user identifiers from portfolio exports.
+AuditLogs
+| where TimeGenerated > ago(7d)
+| where Category in ("GroupManagement", "RoleManagement", "Policy")
+| project
+    TimeGenerated,
+    Category,
+    OperationName,
+    Result
+| order by TimeGenerated desc

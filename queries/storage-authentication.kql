@@ -1,0 +1,11 @@
+// Confirm that blob reads used OAuth rather than Shared Key.
+StorageBlobLogs
+| where TimeGenerated > ago(24h)
+| where AccountName startswith "stcarebridge"
+| project
+    TimeGenerated,
+    OperationName,
+    StatusCode,
+    AuthenticationType,
+    RequesterAppId
+| order by TimeGenerated desc

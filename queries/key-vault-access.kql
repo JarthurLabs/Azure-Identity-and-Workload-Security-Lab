@@ -1,0 +1,12 @@
+// Recent Key Vault data-plane activity from the lab vault.
+// Replace the placeholder with the sanitized lab resource name when running.
+AZKVAuditLogs
+| where TimeGenerated > ago(24h)
+| where ResourceId has "/vaults/kv-carebridge-"
+| project
+    TimeGenerated,
+    OperationName,
+    ResultType,
+    AuthenticationType,
+    CallerIPAddress
+| order by TimeGenerated desc
