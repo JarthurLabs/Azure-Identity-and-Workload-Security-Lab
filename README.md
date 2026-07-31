@@ -6,7 +6,7 @@ A small, evidence-led Azure lab that connects Microsoft Entra identity controls 
 
 The scenario is intentionally modest: a fictional healthcare analytics team needs controlled administrator access, a workload identity that does not use stored credentials, private access to secrets and storage, and enough logging to verify the controls. The goal is to demonstrate sound junior-level cloud security practice after SC-300 and SC-500 study—not to present this as production or enterprise architecture experience.
 
-> **Current state:** lab design and deployment automation are being built. Controls will be marked as implemented only after a real Azure validation artifact is recorded.
+> **Current state:** repository validation passes, but the live environment precheck found no Azure subscription and no permission to create groups in the current Entra directory. The workload remains undeployed. See [findings and fixes](docs/05-findings-and-fixes.md).
 
 ## What this lab is designed to prove
 

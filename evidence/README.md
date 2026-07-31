@@ -6,6 +6,8 @@ This directory contains proof from the real Azure and Microsoft Entra lab. Files
 
 | ID | Control or test | Source | Captured (UTC) | Status | Artifact |
 |---|---|---|---|---|---|
+| P-01 | Azure subscription precheck | Azure portal | 2026-07-31 04:53 | Blocked: zero subscriptions | [`P-01-no-azure-subscription.jpg`](screenshots/P-01-no-azure-subscription.jpg) |
+| P-02 | Entra directory write precheck | Entra admin center | 2026-07-31 04:54 | Blocked: HTTP 401 | [`P-02-entra-group-access-denied.jpg`](screenshots/P-02-entra-group-access-denied.jpg) |
 | E-01 | Tenant capability and license check | Entra admin center / Microsoft Graph | — | Pending | — |
 | E-02 | Lab groups and membership | Entra admin center / Microsoft Graph | — | Pending | — |
 | E-03 | Conditional Access safety review | Entra admin center | — | License-dependent | — |

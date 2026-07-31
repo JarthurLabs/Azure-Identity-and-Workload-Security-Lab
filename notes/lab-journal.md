@@ -56,3 +56,36 @@ The continuous integration result validates repository files only. It is not evi
 **Mistakes or fixes**
 
 None recorded in this session.
+
+## 2026-07-31 — Live environment precheck
+
+**Goal:** confirm the signed-in Azure and Entra environments before running deployment commands.
+
+**Expected**
+
+- One enabled Azure subscription.
+- Permission to create lab-only security groups in an owned training directory.
+
+**Actual**
+
+- The Azure subscriptions page showed zero subscriptions at 04:53 UTC.
+- The Entra **New group** action returned **You don't have access** and HTTP status 401 at 04:54 UTC.
+
+**What I got wrong**
+
+I treated successful portal sign-in as a likely indicator that the account had a usable Azure subscription and an administrable Entra directory. The prechecks showed that those are three separate conditions:
+
+1. authentication to the portal;
+2. authorization inside a directory; and
+3. access to an enabled Azure subscription.
+
+**Decision**
+
+- Do not run or simulate the Bicep deployment.
+- Do not claim Entra group administration.
+- Preserve sanitized evidence of both checks.
+- Retest only in an owned training directory with an enabled subscription.
+
+**Fix status**
+
+Pending account-side setup. No broad directory role was requested in the current directory because its ownership and intended use have not been confirmed.
