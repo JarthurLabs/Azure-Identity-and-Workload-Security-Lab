@@ -13,12 +13,21 @@ if ! az group show --name "${RESOURCE_GROUP_NAME}" >/dev/null 2>&1; then
   exit 0
 fi
 
-read -r purpose_tag managed_by_tag environment_tag < <(
+mapfile -t resource_group_tags < <(
   az group show \
     --name "${RESOURCE_GROUP_NAME}" \
     --query '[tags.purpose, tags.managedBy, tags.environment]' \
     --output tsv
 )
+
+if [[ "${#resource_group_tags[@]}" -ne 3 ]]; then
+  echo "Azure CLI returned an unexpected resource-group tag format. Refusing cleanup." >&2
+  exit 1
+fi
+
+purpose_tag="${resource_group_tags[0]}"
+managed_by_tag="${resource_group_tags[1]}"
+environment_tag="${resource_group_tags[2]}"
 
 if [[ "${purpose_tag}" != 'identity-workload-security-lab' ||
       "${managed_by_tag}" != 'bicep' ||
