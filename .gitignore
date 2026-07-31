@@ -1,0 +1,25 @@
+# Local Azure and deployment state
+.azure/
+*.parameters.local.json
+*.bicepparam.local
+deployment-output.json
+what-if.txt
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.pfx
+*.key
+
+# Tool caches
+.DS_Store
+.idea/
+.vscode/
+node_modules/
+.npm-cache/
+
+# Temporary evidence before redaction
+evidence/raw/
+evidence/**/unredacted-*
