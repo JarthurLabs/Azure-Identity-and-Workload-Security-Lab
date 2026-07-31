@@ -5,15 +5,7 @@ REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 NAME_PREFIX="${NAME_PREFIX:-carebridge}"
 DEPLOYMENT_NAME="${DEPLOYMENT_NAME:-${NAME_PREFIX}-security-lab}"
 
-if ! command -v az >/dev/null 2>&1; then
-  echo "Azure CLI is required. Run this script from Azure Cloud Shell or install Azure CLI." >&2
-  exit 1
-fi
-
-if ! az account show >/dev/null 2>&1; then
-  echo "No active Azure CLI session. Run 'az login' first." >&2
-  exit 1
-fi
+"${REPOSITORY_ROOT}/scripts/verify-azure-context.sh"
 
 resource_group_name="$(az deployment sub show --name "${DEPLOYMENT_NAME}" --query 'properties.outputs.resourceGroupName.value' --output tsv)"
 virtual_machine_name="$(az deployment sub show --name "${DEPLOYMENT_NAME}" --query 'properties.outputs.virtualMachineName.value' --output tsv)"

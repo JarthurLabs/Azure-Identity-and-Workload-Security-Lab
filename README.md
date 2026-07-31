@@ -6,7 +6,7 @@ A small, evidence-led Azure lab that connects Microsoft Entra identity controls 
 
 The scenario is intentionally modest: a fictional healthcare analytics team needs controlled administrator access, a workload identity that does not use stored credentials, private access to secrets and storage, and enough logging to verify the controls. The goal is to demonstrate sound junior-level cloud security practice after SC-300 and SC-500 study—not to present this as production or enterprise architecture experience.
 
-> **Current state:** repository validation passes, but the live environment precheck found no Azure subscription and no permission to create groups in the current Entra directory. The workload remains undeployed. See [findings and fixes](docs/05-findings-and-fixes.md).
+> **Current state:** repository validation passes, but the live environment remains blocked. Two Microsoft accounts authenticated successfully; neither exposed an Azure subscription, the alternate account had no other Azure directory, and it was not a member of the tested Entra tenant. The workload remains undeployed. See [findings and fixes](docs/05-findings-and-fixes.md).
 
 ## What this lab is designed to prove
 
@@ -55,14 +55,34 @@ flowchart LR
 
 The temporary validation workload exists only long enough to prove that the managed identity can use the private data path. It is then removed to control cost.
 
+## Live precheck evidence
+
+These are real, sanitized prerequisite checks—not simulated control results. They remain visible because they explain why deployment stopped.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="evidence/screenshots/P-01-no-azure-subscription.jpg" alt="Azure subscription grid with zero entries" width="320"><br>
+      <sub>P-01: no Azure subscription</sub>
+    </td>
+    <td align="center">
+      <img src="evidence/screenshots/P-02-entra-group-access-denied.jpg" alt="Microsoft Entra group action access denial" width="320"><br>
+      <sub>P-02: group administration denied</sub>
+    </td>
+  </tr>
+</table>
+
+The alternate-account membership failure is recorded as sanitized text evidence. Successful deployment, validation, monitoring, and cleanup screenshots will replace the portfolio's lead evidence only after those tests run in a usable training environment.
+
 ## Repository tour
 
 - [`docs/01-scope-and-threat-model.md`](docs/01-scope-and-threat-model.md) defines the scenario, assumptions, and control boundaries.
 - [`docs/skills-map.md`](docs/skills-map.md) maps implemented artifacts to SC-300 and SC-500 skill areas without turning exam objectives into experience claims.
+- [`docs/06-deployment-runbook.md`](docs/06-deployment-runbook.md) provides the guarded preview, deployment, validation, and cleanup sequence.
 - [`docs/references.md`](docs/references.md) lists the Microsoft guidance used for the controls.
 - [`notes/lab-journal.md`](notes/lab-journal.md) records dated work sessions, failures, decisions, fixes, and retests.
 - [`evidence/README.md`](evidence/README.md) is the evidence index and redaction standard.
-- `infra/`, `queries/`, and deployment scripts will contain the tested implementation.
+- `infra/`, `queries/`, and `scripts/` provide the implementation and validation workflow; live results remain separate evidence.
 
 ## Evidence standard
 

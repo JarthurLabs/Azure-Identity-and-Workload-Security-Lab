@@ -16,7 +16,7 @@ The repository includes small KQL queries under `queries/`. Entra queries are in
 3. deploy the resource group and lab resources;
 4. allow time for Azure RBAC propagation;
 5. run `scripts/validate.sh`;
-6. confirm the private-path and OAuth checks pass;
+6. confirm the private-path and OAuth read checks pass and the unauthorized blob write returns HTTP 403;
 7. wait for diagnostic ingestion;
 8. run the Key Vault and Storage KQL queries;
 9. inspect relevant Azure Policy or Defender for Cloud findings;
@@ -31,6 +31,7 @@ The repository includes small KQL queries under `queries/`. Entra queries are in
 | What-if output | Expected management-plane change set | Effective data-plane access |
 | VM private DNS check | Service names resolve into the private-endpoint subnet | Every possible network path is private |
 | Managed-identity REST test | The assigned identity can perform the tested read | Broader application correctness |
+| Denied blob write | The managed identity's reader role does not permit the tested write | Every possible privilege-escalation path is blocked |
 | Log Analytics row | The tested operation was ingested | Complete security monitoring coverage |
 | Defender/Policy finding | Azure evaluated a specific configuration | Production risk acceptance or compliance |
 

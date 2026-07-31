@@ -4,9 +4,9 @@ This table is a portfolio index, not a claim of production experience. Status ch
 
 | Skill area | Lab implementation | Status | Evidence |
 |---|---|---|---|
-| SC-300: identities and groups | Lab security groups and membership review | Blocked | Current directory returned HTTP 401 on group creation; see F-02 |
+| SC-300: identities and groups | Lab security groups and membership review | Blocked | Current directory returned HTTP 401 and the alternate account was not a tenant member; see F-02 and F-03 |
 | SC-300: authentication and access | Conditional Access report-only evaluation with an emergency-access exclusion | License-dependent | Pending tenant capability check |
-| SC-300: workload identities | User-assigned managed identity and enterprise application review | Blocked | No Azure subscription; see F-01 |
+| SC-300: workload identities | User-assigned managed identity and enterprise application review | Blocked | Neither tested account exposed an Azure subscription; see F-01 and F-03 |
 | SC-300: identity governance | Review of privileged and standing access; PIM or access review only if licensed | License-dependent | Pending tenant capability check |
 | SC-500: identity and access governance | Resource-scoped Azure RBAC for administrators and the managed identity | Blocked | No Azure subscription; see F-01 |
 | SC-500: storage and networking | Secure Storage baseline, virtual network, private endpoint, and private DNS | Blocked | No Azure subscription; see F-01 |

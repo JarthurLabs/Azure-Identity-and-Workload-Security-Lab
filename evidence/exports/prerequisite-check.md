@@ -18,6 +18,14 @@ Captured on 2026-07-31 in the live Microsoft portals.
 - **Redacted:** account email, directory identifier, and session identifier are outside the cropped screenshot.
 - **Next test:** switch to an owned training directory with an appropriate administrator role, then create the lab groups.
 
+## P-03 — Alternate account tenant membership
+
+- **Source:** Azure portal, Directories + subscriptions, and Microsoft Entra sign-in.
+- **Result:** the alternate account had zero Azure subscriptions, no other available directory, and no membership in the tested Entra tenant.
+- **Security meaning:** signing in with another Microsoft account does not grant tenant administration or Azure resource access.
+- **Redacted:** both account identities, directory identifiers, and session parameters are outside the cropped screenshot.
+- **Next test:** complete subscription setup under the intended training account or use an existing account that owns an enabled subscription and Entra directory.
+
 ## Evidence boundary
 
-These are failed prerequisite checks, not implemented security controls. They remain visible because they explain why the project did not claim deployment success.
+These are failed prerequisite checks, not implemented security controls. They remain visible because they explain why the project did not claim deployment success or present an account switch as a permissions fix.

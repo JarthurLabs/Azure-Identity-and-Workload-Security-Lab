@@ -11,6 +11,12 @@ The identity portion stays small and uses group-based assignment:
 
 The repository does not create member users or emergency-access accounts automatically. User creation involves temporary credentials and tenant-specific domains, so it is performed manually in the isolated training tenant and documented only after redaction.
 
+## Administrator assignment boundary
+
+The current Bicep template assigns data-plane roles only to the managed identity. It does not yet assign an Azure role to either human-access group because the live tenant has not produced verified group object IDs. The group-to-Azure RBAC connection in the architecture is an intended control, not an implemented claim.
+
+After the training tenant is available, any human group assignment must use the narrowest workable scope and appear in the role-assignment evidence before this control can be marked implemented.
+
 ## Conditional Access safety sequence
 
 Conditional Access is implemented only if the tenant has Microsoft Entra ID P1 or a suitable trial.

@@ -28,6 +28,8 @@ The implementation is based on Microsoft documentation rather than copied portal
 - [Run scripts in a Linux VM with Run Command](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/run-command)
 - [Supported Key Vault diagnostic logs](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-keyvault-vaults-logs)
 - [Supported Blob Storage diagnostic logs](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-storage-storageaccounts-blobservices-logs)
+- [AZKVAuditLogs table schema](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azkvauditlogs)
+- [StorageBlobLogs table schema](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/storagebloblogs)
 - [Foundational cloud security posture management](https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-cloud-security-posture-management)
 
 These links are supporting references. The repository's evidence must still come from the deployed lab.

@@ -41,3 +41,15 @@ This file will contain only issues observed in the live lab. Planned “mistakes
 - **Retest:** pending. Confirm group creation in the intended training directory before creating pilot members or policies.
 - **Lesson:** portal visibility and directory write authority are separate checks.
 - **Remaining limitation:** group administration, Conditional Access, PIM, and access-review evidence cannot be produced in the current directory.
+
+### F-03 — Alternate Microsoft account was not a member of the tested tenant
+
+- **Observed (UTC):** 2026-07-31 05:44.
+- **Expected:** the alternate account would expose an enabled Azure subscription and an owned Entra training directory.
+- **Actual:** Azure showed zero subscriptions and no alternate directories. Microsoft Entra then reported that the selected account did not exist in the tested tenant and would need to be added as an external user.
+- **Evidence:** sanitized portal observations in [`prerequisite-check.md`](../evidence/exports/prerequisite-check.md).
+- **Root cause:** Microsoft account authentication did not establish Azure subscription ownership or membership in the existing Entra tenant.
+- **Change:** use an account that already owns an enabled training subscription and directory, or complete subscription setup under the intended alternate account before retesting.
+- **Retest:** pending. Verify an enabled subscription, the intended tenant ID, and an appropriate directory role before running any deployment or group-creation command.
+- **Lesson:** a second authenticated account is not automatically a second Azure environment. Account identity, tenant membership, directory authorization, and subscription access require separate checks.
+- **Remaining limitation:** the SC-300 and SC-500 live-control evidence remains blocked.

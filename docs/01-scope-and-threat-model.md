@@ -2,7 +2,7 @@
 
 ## Scenario
 
-CareBridge Analytics is a fictional small healthcare SaaS team. It needs a safe place for a limited set of administrators to manage one Azure workload that reads a secret and a data object. The lab focuses on the handoff between identity administration and resource protection:
+CareBridge Analytics is a fictional small healthcare SaaS team. It needs a safe place for a limited set of administrators to manage one Azure workload that reads a synthetic secret and inspects a private blob container. The lab focuses on the handoff between identity administration and resource protection:
 
 1. An administrator receives access through an Entra group.
 2. An Azure workload authenticates with a managed identity instead of a stored secret.
@@ -15,7 +15,7 @@ This is not a clinical system and contains no patient, customer, or production d
 ## In scope
 
 - A dedicated Azure resource group.
-- Two lab-only Entra security groups.
+- Three lab-only Entra security groups.
 - A user-assigned managed identity and its Entra enterprise application object.
 - Resource-scoped Azure RBAC assignments.
 - Key Vault and Blob Storage security settings.

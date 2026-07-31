@@ -6,6 +6,7 @@ StorageBlobLogs
     TimeGenerated,
     OperationName,
     StatusCode,
+    StatusText,
     AuthenticationType,
-    RequesterAppId
+    TlsVersion
 | order by TimeGenerated desc

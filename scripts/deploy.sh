@@ -6,14 +6,24 @@ LOCATION="${LOCATION:-eastus}"
 NAME_PREFIX="${NAME_PREFIX:-carebridge}"
 DEPLOYMENT_NAME="${DEPLOYMENT_NAME:-${NAME_PREFIX}-security-lab}"
 APPLY="${APPLY:-false}"
+RESOURCE_GROUP_NAME="rg-${NAME_PREFIX}-security-lab"
 
-if ! command -v az >/dev/null 2>&1; then
-  echo "Azure CLI is required. Run this script from Azure Cloud Shell or install Azure CLI." >&2
+for required_command in az ssh-keygen openssl sed; do
+  if ! command -v "${required_command}" >/dev/null 2>&1; then
+    echo "Required command is unavailable: ${required_command}" >&2
+    exit 1
+  fi
+done
+
+"${REPOSITORY_ROOT}/scripts/verify-azure-context.sh"
+
+if [[ ! "${NAME_PREFIX}" =~ ^[a-z][a-z0-9]{2,11}$ ]]; then
+  echo "NAME_PREFIX must be 3-12 lowercase letters or digits and start with a letter." >&2
   exit 1
 fi
 
-if ! az account show >/dev/null 2>&1; then
-  echo "No active Azure CLI session. Run 'az login' first." >&2
+if [[ "$(az group exists --name "${RESOURCE_GROUP_NAME}")" == 'true' ]]; then
+  echo "Resource group ${RESOURCE_GROUP_NAME} already exists. Stop and inspect it before deploying." >&2
   exit 1
 fi
 

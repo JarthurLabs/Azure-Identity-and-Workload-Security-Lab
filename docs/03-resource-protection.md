@@ -58,4 +58,5 @@ The deployment is not considered successful merely because Azure Resource Manage
 1. both service names resolve through the private endpoint range;
 2. the managed identity obtains separate Key Vault and Storage tokens;
 3. the identity can read the marker secret without printing its value; and
-4. the identity can list the expected blob container through OAuth.
+4. the identity can list the expected blob container through OAuth; and
+5. a blob write fails with HTTP 403 because the identity has only `Storage Blob Data Reader`.

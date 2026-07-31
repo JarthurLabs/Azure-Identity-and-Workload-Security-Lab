@@ -6,6 +6,7 @@ This lab is designed to run briefly, not continuously.
 
 - `Standard_B1s` virtual machine runtime and its managed OS disk.
 - Two private endpoints.
+- Two Azure Private DNS zones.
 - Log Analytics ingestion and retention.
 - Standard Key Vault operations.
 - Standard locally redundant Blob Storage.
@@ -19,13 +20,13 @@ Prices vary by region and subscription. This repository does not claim that the 
 - Delete the VM immediately after evidence collection with:
 
   ```bash
-  CONFIRM_DELETE=true bash scripts/remove-validation-workload.sh
+  CONFIRM_VM_NAME=vm-carebridge-validation bash scripts/remove-validation-workload.sh
   ```
 
 - Delete the complete lab after the final screenshots and exports with:
 
   ```bash
-  CONFIRM_DELETE=true bash scripts/cleanup.sh
+  CONFIRM_RESOURCE_GROUP_NAME=rg-carebridge-security-lab bash scripts/cleanup.sh
   ```
 
 - Review Cost Management before and after the lab. A budget sends notifications; it does not automatically stop resources.

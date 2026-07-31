@@ -1,17 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APPLY="${APPLY:-false}"
 
-if ! command -v az >/dev/null 2>&1; then
-  echo "Azure CLI is required. Run this script from Azure Cloud Shell or install Azure CLI." >&2
-  exit 1
-fi
-
-if ! az account show >/dev/null 2>&1; then
-  echo "No active Azure CLI session. Run 'az login' first." >&2
-  exit 1
-fi
+"${REPOSITORY_ROOT}/scripts/verify-azure-context.sh"
 
 groups=(
   'SG-LAB-CA-Pilot'

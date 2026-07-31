@@ -139,12 +139,12 @@ resource keyVault 'Microsoft.KeyVault/vaults@2024-11-01' = {
     enableRbacAuthorization: true
     enabledForDeployment: false
     enabledForDiskEncryption: false
-    enabledForTemplateDeployment: true
+    enabledForTemplateDeployment: false
     enablePurgeProtection: true
     softDeleteRetentionInDays: 7
     publicNetworkAccess: 'Disabled'
     networkAcls: {
-      bypass: 'AzureServices'
+      bypass: 'None'
       defaultAction: 'Deny'
       ipRules: []
       virtualNetworkRules: []
