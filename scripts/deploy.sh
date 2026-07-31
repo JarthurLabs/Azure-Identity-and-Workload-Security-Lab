@@ -28,6 +28,7 @@ required_resource_providers=(
   'Microsoft.Storage'
 )
 unregistered_resource_providers=()
+registering_resource_providers=()
 
 for resource_provider in "${required_resource_providers[@]}"; do
   registration_state="$(
@@ -37,7 +38,9 @@ for resource_provider in "${required_resource_providers[@]}"; do
       --output tsv 2>/dev/null || true
   )"
 
-  if [[ "${registration_state}" != 'Registered' ]]; then
+  if [[ "${registration_state}" == 'Registering' ]]; then
+    registering_resource_providers+=("${resource_provider}")
+  elif [[ "${registration_state}" != 'Registered' ]]; then
     unregistered_resource_providers+=("${resource_provider}")
   fi
 done
@@ -47,6 +50,11 @@ if (( "${#unregistered_resource_providers[@]}" > 0 )); then
   printf '  - %s\n' "${unregistered_resource_providers[@]}" >&2
   echo "Register them deliberately, wait for completion, and rerun the preview." >&2
   exit 1
+fi
+
+if (( "${#registering_resource_providers[@]}" > 0 )); then
+  echo "Azure provider registration is still propagating; regional what-if will verify readiness:"
+  printf '  - %s\n' "${registering_resource_providers[@]}"
 fi
 
 if [[ ! "${NAME_PREFIX}" =~ ^[a-z][a-z0-9]{2,11}$ ]]; then
