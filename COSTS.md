@@ -4,7 +4,7 @@ This lab is designed to run briefly, not continuously.
 
 ## Potential charges
 
-- `Standard_B1s` virtual machine runtime and its managed OS disk.
+- `Standard_D2ls_v7` virtual machine runtime and its managed OS disk.
 - Two private endpoints.
 - Two Azure Private DNS zones.
 - Log Analytics ingestion and retention.
@@ -13,10 +13,25 @@ This lab is designed to run briefly, not continuously.
 
 Prices vary by region and subscription. This repository does not claim that the lab is free.
 
+On 2026-07-31, the Azure Retail Prices API listed the East US Linux
+`Standard_D2ls_v7` consumption rate as **$0.117 USD per hour**. The SKU was
+selected only after the subscription reported the smaller B-series and
+DLSv5 options as capacity-restricted.
+
+Use these conservative planning limits rather than treating them as a bill:
+
+- under **$1** when the complete lab is deleted within four hours;
+- about **$4** if it is left for 24 hours; and
+- roughly **$110 per month** if every resource is forgotten.
+
+Credits can reduce the amount charged, but the cleanup plan never assumes
+that credits are available.
+
 ## Guardrails
 
 - Run `az deployment sub what-if` before deployment.
 - Use the temporary VM only for private-path validation.
+- Target VM deletion within two hours and complete lab deletion the same day.
 - Delete the VM immediately after evidence collection with:
 
   ```bash
