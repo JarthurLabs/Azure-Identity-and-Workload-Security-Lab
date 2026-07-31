@@ -2,6 +2,8 @@
 
 A small, evidence-led Azure lab that connects Microsoft Entra identity controls to a protected Azure workload for CareBridge Analytics, a fictional healthcare SaaS team.
 
+[![Validate lab files](https://github.com/JarthurLabs/Azure-Identity-and-Workload-Security-Lab/actions/workflows/validate.yml/badge.svg)](https://github.com/JarthurLabs/Azure-Identity-and-Workload-Security-Lab/actions/workflows/validate.yml)
+
 The scenario is intentionally modest: a fictional healthcare analytics team needs controlled administrator access, a workload identity that does not use stored credentials, private access to secrets and storage, and enough logging to verify the controls. The goal is to demonstrate sound junior-level cloud security practice after SC-300 and SC-500 study—not to present this as production or enterprise architecture experience.
 
 > **Current state:** lab design and deployment automation are being built. Controls will be marked as implemented only after a real Azure validation artifact is recorded.

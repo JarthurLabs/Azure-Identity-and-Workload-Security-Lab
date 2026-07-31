@@ -30,3 +30,29 @@ The journal records work as it occurs. Mistakes are included only when they actu
 **Mistakes or fixes**
 
 None recorded in this session.
+
+## 2026-07-31 — Repository baseline
+
+**Goal:** publish the project as functional milestones and confirm that the committed files pass automated checks.
+
+**Work completed**
+
+- Created the public `JarthurLabs/Azure-Identity-and-Workload-Security-Lab` repository.
+- Published the scenario and evidence rules before the infrastructure implementation.
+- Opened separate GitHub issues for deployment, workload validation, Entra controls, and evidence cleanup.
+- Published the Bicep, shell validation, KQL, and documentation as one infrastructure milestone.
+- Confirmed GitHub Actions run 1 completed successfully at 04:26 UTC.
+
+**Validation**
+
+- Bicep build: passed.
+- ShellCheck: passed.
+- Committed-evidence redaction check: passed.
+
+**Boundary**
+
+The continuous integration result validates repository files only. It is not evidence that the Azure deployment or security controls work.
+
+**Mistakes or fixes**
+
+None recorded in this session.
