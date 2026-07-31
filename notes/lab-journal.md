@@ -135,6 +135,11 @@ Keep the workload undeployed until an enabled subscription and owned training di
 - After the parser fix, the context check passed and confirmed that the intended resource group did not exist.
 - Azure what-if then returned `SkuNotAvailable` for several VM sizes in East US, Central US, and West US 3.
 - A provider-readiness check showed that the new subscription had not registered the Compute, Network, Storage, Key Vault, Managed Identity, or monitoring providers.
+- After deliberate approval, the seven required providers were registered.
+- Microsoft guidance showed that an overall `Registering` state must not block regional deployment, so the provider guard was corrected to let regional what-if decide readiness.
+- The subscription continued to reject `Standard_B1s` and `Standard_D2ls_v5` in East US after provider registration.
+- A bounded SKU inventory identified `Standard_D2ls_v7` as unrestricted in East US.
+- The `Standard_D2ls_v7` what-if completed successfully with 26 resources to create and no modifications or deletions.
 
 **What I got wrong**
 
@@ -146,7 +151,9 @@ I assumed Azure CLI array output in TSV format would be read as three fields on 
 - Correct the Bicep managed-identity type casing.
 - Build the Blob private DNS suffix from `environment().suffixes.storage`.
 - Stop the deployment script early with a clear list when required resource providers are not registered.
+- Allow a provider in `Registering` state to reach regional what-if, while still rejecting `NotRegistered`.
+- Replace the unavailable validation SKU with the smallest suitable unrestricted option returned by the subscription.
 
 **Retest**
 
-The account-context guardrail now passes. The resource group remains absent, and no lab resource has been deployed. A clean what-if is pending deliberate provider registration.
+The account-context guardrail passes, the providers are registered or regionally ready, and the East US what-if passes with 26 creates. The resource group remains absent, and no billable lab resource has been deployed. Deployment now requires separate cost approval.
