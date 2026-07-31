@@ -11,7 +11,7 @@ The Bicep template deploys a deliberately small workload:
 - one Key Vault with the Azure RBAC permission model;
 - one general-purpose v2 Storage account and a private blob container;
 - private endpoints and private DNS for Key Vault and Blob Storage;
-- one temporary Ubuntu `Standard_B1s` VM with no public IP;
+- one temporary Ubuntu `Standard_D2ls_v7` VM with no public IP;
 - one Log Analytics workspace and resource diagnostic settings.
 
 ## Security choices
