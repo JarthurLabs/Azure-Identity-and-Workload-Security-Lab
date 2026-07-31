@@ -17,6 +17,38 @@ done
 
 "${REPOSITORY_ROOT}/scripts/verify-azure-context.sh"
 
+required_resource_providers=(
+  'Microsoft.Authorization'
+  'Microsoft.Compute'
+  'Microsoft.Insights'
+  'Microsoft.KeyVault'
+  'Microsoft.ManagedIdentity'
+  'Microsoft.Network'
+  'Microsoft.OperationalInsights'
+  'Microsoft.Storage'
+)
+unregistered_resource_providers=()
+
+for resource_provider in "${required_resource_providers[@]}"; do
+  registration_state="$(
+    az provider show \
+      --namespace "${resource_provider}" \
+      --query registrationState \
+      --output tsv 2>/dev/null || true
+  )"
+
+  if [[ "${registration_state}" != 'Registered' ]]; then
+    unregistered_resource_providers+=("${resource_provider}")
+  fi
+done
+
+if (( "${#unregistered_resource_providers[@]}" > 0 )); then
+  echo "Required Azure resource providers are not registered:" >&2
+  printf '  - %s\n' "${unregistered_resource_providers[@]}" >&2
+  echo "Register them deliberately, wait for completion, and rerun the preview." >&2
+  exit 1
+fi
+
 if [[ ! "${NAME_PREFIX}" =~ ^[a-z][a-z0-9]{2,11}$ ]]; then
   echo "NAME_PREFIX must be 3-12 lowercase letters or digits and start with a letter." >&2
   exit 1
