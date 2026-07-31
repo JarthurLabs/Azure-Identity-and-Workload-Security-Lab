@@ -30,11 +30,20 @@ if ! az account set --subscription "${EXPECTED_SUBSCRIPTION_ID}" >/dev/null 2>&1
   exit 1
 fi
 
-read -r active_subscription_id active_tenant_id active_state < <(
+mapfile -t active_context < <(
   az account show \
     --query '[id, tenantId, state]' \
     --output tsv
 )
+
+if [[ "${#active_context[@]}" -ne 3 ]]; then
+  echo "Azure CLI returned an unexpected account-context format." >&2
+  exit 1
+fi
+
+active_subscription_id="${active_context[0]}"
+active_tenant_id="${active_context[1]}"
+active_state="${active_context[2]}"
 
 if [[ "${active_subscription_id}" != "${EXPECTED_SUBSCRIPTION_ID}" ]]; then
   echo "Azure CLI did not select the expected subscription." >&2
