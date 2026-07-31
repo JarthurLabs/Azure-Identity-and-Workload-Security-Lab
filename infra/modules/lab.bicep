@@ -396,7 +396,7 @@ resource validationVirtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01'
   }
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_B1s'
+      vmSize: 'Standard_D2ls_v7'
     }
     osProfile: {
       computerName: virtualMachineName
