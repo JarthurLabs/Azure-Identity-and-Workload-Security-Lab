@@ -88,4 +88,16 @@ This file will contain only issues observed in the live lab. Planned “mistakes
 - **Change:** use the smallest suitable unrestricted option found, `Standard_D2ls_v7`, and raise the documented cost ceiling.
 - **Retest:** passed. Azure what-if reported 26 resources to create, with no modifications or deletions.
 - **Lesson:** a cheap catalog SKU is not deployable evidence until the target subscription and region accept it.
-- **Remaining limitation:** what-if proves the proposed management-plane changes only. Deployment and data-plane validation still require explicit cost approval.
+- **Remaining limitation:** resolved for this lab run. Deployment and data-plane validation later passed; the result remains training evidence rather than production experience.
+
+### F-07 — Cleanup ownership tags used the same unsafe TSV assumption
+
+- **Observed (UTC):** 2026-07-31 08:07.
+- **Expected:** the cleanup guard would read the three ownership tags, list the remaining resources, and delete only the confirmed lab resource group.
+- **Actual:** the guard reported that the ownership tags did not match and exited before deletion, even though a prior JSON check showed the expected values.
+- **Evidence:** [`cleanup-verification.md`](../evidence/exports/cleanup-verification.md).
+- **Root cause:** the cleanup script used Bash `read` for an Azure CLI array rendered as one TSV value per line. Only the first value was assigned. This was the same output-format assumption previously fixed in the account-context guard.
+- **Change:** use `mapfile`, require exactly three values, and assign each tag by index before comparing it.
+- **Retest:** passed. The corrected guard accepted the ownership tags, completed the exact-name deletion, and a separate check returned `RESOURCE_GROUP_EXISTS=false` with zero active resources in the lab group.
+- **Lesson:** a parser fix should be searched for in every script that consumes the same CLI output shape; fixing only the first occurrence left a later safety path broken.
+- **Remaining limitation:** the purge-protected Key Vault name remains reserved for Azure's seven-day soft-delete period, but the active lab resource group and its resources are gone.

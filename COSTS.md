@@ -27,6 +27,16 @@ Use these conservative planning limits rather than treating them as a bill:
 Credits can reduce the amount charged, but the cleanup plan never assumes
 that credits are available.
 
+## Recorded live run
+
+The approved run on 2026-07-31 stayed inside the four-hour guardrail:
+
+- validation began at 07:55 UTC;
+- the VM, operating-system disk, and validation interface were verified deleted before 08:03 UTC; and
+- full resource-group deletion was independently verified at 08:14 UTC.
+
+The retail-rate planning estimate therefore remains under **$1**. This is not presented as a final invoice because Azure Cost Management data can lag and the non-VM services meter separately.
+
 ## Guardrails
 
 - Run `az deployment sub what-if` before deployment.

@@ -157,3 +157,49 @@ I assumed Azure CLI array output in TSV format would be read as three fields on 
 **Retest**
 
 The account-context guardrail passes, the providers are registered or regionally ready, and the East US what-if passes with 26 creates. The resource group remains absent, and no billable lab resource has been deployed. Deployment now requires separate cost approval.
+
+## 2026-07-31 — Live deployment, access tests, and monitoring
+
+**Goal:** deploy the approved training workload, test the intended security boundaries, preserve sanitized evidence, and remove the cost-driving validator.
+
+**Actual**
+
+- Pinned the Cloud Shell checkout to reviewed commit `29279490cc4b`.
+- Repeated the East US what-if immediately before deployment; it again reported 26 creates.
+- Completed the subscription-scope deployment.
+- Ran the test from the private validation VM at 07:55 UTC.
+- Confirmed private DNS for Key Vault and Blob Storage.
+- Confirmed the user-assigned managed identity could read the expected Key Vault secret and list the private Blob container.
+- Confirmed the same identity could not write a Blob; the deliberate request returned HTTP 403.
+- Queried resource-specific Log Analytics tables at 08:04 UTC. Key Vault contained 14 HTTP 200 audit rows. Storage contained one OAuth HTTP 200 row and one OAuth HTTP 403 row.
+- Removed the temporary VM and verified deletion of its operating-system disk and validation network interface.
+
+**What the evidence supports**
+
+The run connects configuration to observed behavior: private name resolution, credential-free workload authentication, scoped read access, a denied write, and corresponding diagnostic records. It does not claim enterprise rollout, production operations, or complete monitoring coverage.
+
+**Evidence**
+
+- [`azure-workload-validation.md`](../evidence/exports/azure-workload-validation.md)
+- [`monitoring-validation.md`](../evidence/exports/monitoring-validation.md)
+
+## 2026-07-31 — Cleanup guard failure and fix
+
+**Goal:** delete only the tagged lab resource group and verify cleanup.
+
+**Actual**
+
+- The first full-cleanup run at 08:07 UTC stopped before deletion because the ownership-tag comparison failed.
+- A direct tag check showed the expected values were present.
+- The cleanup script used Bash `read` against three Azure CLI TSV lines, repeating the parser assumption previously fixed in the account-context script.
+- Replaced `read` with `mapfile`, required exactly three values, and assigned them by index.
+- Published the fix as commit `09b398867793`.
+- The retest accepted the ownership tags, listed the remaining non-VM resources, and began the exact-name resource-group deletion at 08:09 UTC.
+
+**What I got wrong**
+
+I fixed the multiline Azure CLI parsing pattern in the context check without searching the other safety scripts for the same assumption. The cleanup guard failed safely, but the duplicated bug should have been caught during the earlier fix.
+
+**Retest**
+
+Azure completed the deletion. A separate verification at 08:14 UTC returned `RESOURCE_GROUP_EXISTS=false` and zero active resources in the lab group. The purge-protected Key Vault name remains reserved during the seven-day soft-delete period.

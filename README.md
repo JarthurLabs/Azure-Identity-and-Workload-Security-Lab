@@ -6,7 +6,7 @@ A small, evidence-led Azure lab that connects Microsoft Entra identity controls 
 
 The scenario is intentionally modest: a fictional healthcare analytics team needs controlled administrator access, a workload identity that does not use stored credentials, private access to secrets and storage, and enough logging to verify the controls. The goal is to demonstrate sound junior-level cloud security practice after SC-300 and SC-500 study—not to present this as production or enterprise architecture experience.
 
-> **Current state:** repository validation passes, the replacement training subscription is Active, and the guarded East US what-if now passes with 26 new resources and no changes or deletions. The workload remains undeployed pending explicit cost approval. Earlier account and directory failures remain as historical evidence; Entra group authorization still needs a separate retest. See [findings and fixes](docs/05-findings-and-fixes.md).
+> **Current state:** the approved East US workload was deployed and tested on 2026-07-31. Private DNS, managed-identity reads, the expected denied Blob write, and Log Analytics ingestion all passed. The validation VM, disk, and interface were removed, then full resource-group cleanup was independently verified. Earlier account and directory failures remain as historical evidence; Entra group authorization still needs a separate retest. See [findings and fixes](docs/05-findings-and-fixes.md).
 
 ## What this lab is designed to prove
 
@@ -55,6 +55,27 @@ flowchart LR
 
 The temporary validation workload exists only long enough to prove that the managed identity can use the private data path. It is then removed to control cost.
 
+## Live validated evidence
+
+These images are cropped captures from the real Azure Cloud Shell session. The text exports are the primary evidence because they document the source, time, security claim, limits, and redactions.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="evidence/screenshots/E-07-managed-identity-validation.jpg" alt="Sanitized managed-identity validation output showing private DNS, allowed reads, and a denied write" width="420"><br>
+      <sub>E-07: private path, allowed reads, and expected HTTP 403 write</sub>
+    </td>
+    <td align="center">
+      <img src="evidence/screenshots/E-04-resource-inventory.jpg" alt="Sanitized Azure resource-type inventory and lab metadata" width="420"><br>
+      <sub>E-04: live lab metadata and deployed resource types</sub>
+    </td>
+  </tr>
+</table>
+
+- [Read the workload validation evidence](evidence/exports/azure-workload-validation.md).
+- [Read the monitoring evidence](evidence/exports/monitoring-validation.md).
+- [Read the cleanup evidence](evidence/exports/cleanup-verification.md).
+
 ## Live precheck evidence
 
 These are real, sanitized historical prerequisite checks—not simulated control results. They remain visible because they explain the account changes and guardrails that were required before the successful what-if.
@@ -72,7 +93,7 @@ These are real, sanitized historical prerequisite checks—not simulated control
   </tr>
 </table>
 
-The alternate-account membership failure is recorded as sanitized text evidence. The active subscription and successful what-if resolve the workload prerequisite only; deployment, validation, monitoring, and cleanup screenshots will replace the portfolio's lead evidence after the approved live run.
+The alternate-account membership failure is recorded as sanitized text evidence. These blockers remain because they show why account-context checks and exact cleanup guards were added; they are history, not current workload status.
 
 ## Repository tour
 
@@ -97,7 +118,7 @@ Screenshots and exports in this repository must come from the real lab tenant or
 
 ## Cost and cleanup
 
-The design uses small, temporary resources. Private endpoints, Log Analytics ingestion, and a validation workload can incur charges. The cleanup script and final resource inventory will be recorded before the lab is considered complete.
+The validation VM was removed immediately after access testing, including its disk and validation interface. The guarded full cleanup then deleted the resource group, and a separate Azure CLI check returned `false` for group existence and zero active resources in the lab group. The purge-protected Key Vault name remains reserved during its seven-day soft-delete period.
 
 ## License
 

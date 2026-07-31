@@ -12,13 +12,13 @@ This directory contains proof from the real Azure and Microsoft Entra lab. Files
 | E-01 | Tenant capability and license check | Entra admin center / Microsoft Graph | — | Pending | — |
 | E-02 | Lab groups and membership | Entra admin center / Microsoft Graph | — | Pending | — |
 | E-03 | Conditional Access safety review | Entra admin center | — | License-dependent | — |
-| E-04 | Azure resource inventory | Azure CLI | — | Pending | — |
-| E-05 | Managed identity and scoped RBAC | Azure CLI / Azure portal | — | Pending | — |
-| E-06 | Private data-plane configuration | Azure CLI / Azure portal | — | Pending | — |
-| E-07 | Managed-identity allowed reads and denied write | Validation workload logs | — | Pending | — |
-| E-08 | Diagnostic query result | Log Analytics | — | Pending | — |
-| E-09 | Defender for Cloud or Policy review | Azure portal | — | Pending | — |
-| E-10 | Cleanup and retained-resource check | Azure CLI | — | Pending | — |
+| E-04 | Azure resource inventory and guarded deployment | Azure CLI / Azure portal | 2026-07-31 07:54 | Passed: 26-create what-if and deployment | [`azure-workload-validation.md`](exports/azure-workload-validation.md) |
+| E-05 | Managed identity and scoped RBAC | Azure VM Run Command | 2026-07-31 07:55 | Passed: intended reads allowed | [`azure-workload-validation.md`](exports/azure-workload-validation.md) |
+| E-06 | Private data-plane configuration | Azure VM Run Command | 2026-07-31 07:55 | Passed: both services resolved privately | [`azure-workload-validation.md`](exports/azure-workload-validation.md) |
+| E-07 | Managed-identity allowed reads and denied write | Validation workload logs | 2026-07-31 07:55 | Passed: HTTP 200 reads and expected HTTP 403 write | [`azure-workload-validation.md`](exports/azure-workload-validation.md) |
+| E-08 | Diagnostic query result | Log Analytics | 2026-07-31 08:04 | Passed: Key Vault and Storage OAuth records ingested | [`monitoring-validation.md`](exports/monitoring-validation.md) |
+| E-09 | Defender for Cloud or Policy review | Azure portal | — | Not collected; no claim | — |
+| E-10 | Cleanup and retained-resource check | Azure CLI | 2026-07-31 08:14 | Passed: group absent and zero active lab resources | [`cleanup-verification.md`](exports/cleanup-verification.md) |
 
 ## Directory layout
 
