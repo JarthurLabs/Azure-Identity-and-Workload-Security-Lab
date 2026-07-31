@@ -29,3 +29,11 @@ Captured on 2026-07-31 in the live Microsoft portals.
 ## Evidence boundary
 
 These are failed prerequisite checks, not implemented security controls. They remain visible because they explain why the project did not claim deployment success or present an account switch as a permissions fix.
+
+## 2026-07-31 workload prerequisite retest
+
+- **Result:** a replacement training subscription was Active and the signed-in account held Owner.
+- **Provider check:** the seven required resource providers were deliberately registered.
+- **Capacity check:** the planned low-cost SKUs were restricted; `Standard_D2ls_v7` was unrestricted in East US.
+- **What-if:** passed with 26 resources to create and no modifications or deletions.
+- **Boundary:** no resource was deployed. What-if is management-plane preview evidence, not proof that the security controls work.
