@@ -6,7 +6,7 @@ A small, evidence-led Azure lab that connects Microsoft Entra identity controls 
 
 The scenario is intentionally modest: a fictional healthcare analytics team needs controlled administrator access, a workload identity that does not use stored credentials, private access to secrets and storage, and enough logging to verify the controls. The goal is to demonstrate sound junior-level cloud security practice after SC-300 and SC-500 study—not to present this as production or enterprise architecture experience.
 
-> **Current state:** repository validation passes, but the live environment remains blocked. Two Microsoft accounts authenticated successfully; neither exposed an Azure subscription, the alternate account had no other Azure directory, and it was not a member of the tested Entra tenant. The workload remains undeployed. See [findings and fixes](docs/05-findings-and-fixes.md).
+> **Current state:** repository validation passes, the replacement training subscription is Active, and the guarded East US what-if now passes with 26 new resources and no changes or deletions. The workload remains undeployed pending explicit cost approval. Earlier account and directory failures remain as historical evidence; Entra group authorization still needs a separate retest. See [findings and fixes](docs/05-findings-and-fixes.md).
 
 ## What this lab is designed to prove
 
@@ -57,7 +57,7 @@ The temporary validation workload exists only long enough to prove that the mana
 
 ## Live precheck evidence
 
-These are real, sanitized prerequisite checks—not simulated control results. They remain visible because they explain why deployment stopped.
+These are real, sanitized historical prerequisite checks—not simulated control results. They remain visible because they explain the account changes and guardrails that were required before the successful what-if.
 
 <table>
   <tr>
@@ -72,7 +72,7 @@ These are real, sanitized prerequisite checks—not simulated control results. T
   </tr>
 </table>
 
-The alternate-account membership failure is recorded as sanitized text evidence. Successful deployment, validation, monitoring, and cleanup screenshots will replace the portfolio's lead evidence only after those tests run in a usable training environment.
+The alternate-account membership failure is recorded as sanitized text evidence. The active subscription and successful what-if resolve the workload prerequisite only; deployment, validation, monitoring, and cleanup screenshots will replace the portfolio's lead evidence after the approved live run.
 
 ## Repository tour
 
