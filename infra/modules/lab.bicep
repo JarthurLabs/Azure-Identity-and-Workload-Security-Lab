@@ -30,7 +30,7 @@ var keyVaultName = take('kv-${namePrefix}-${uniqueSuffix}', 24)
 var storageAccountName = take('st${compactPrefix}${uniqueSuffix}', 24)
 var logAnalyticsWorkspaceName = 'law-${namePrefix}-security'
 var keyVaultPrivateDnsZoneName = 'privatelink.vaultcore.azure.net'
-var blobPrivateDnsZoneName = 'privatelink.blob.core.windows.net'
+var blobPrivateDnsZoneName = 'privatelink.blob.${environment().suffixes.storage}'
 var keyVaultSecretsUserRoleId = '4633458b-17de-408a-b874-0445c86b69e6'
 var storageBlobDataReaderRoleId = '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
 
@@ -389,7 +389,7 @@ resource validationVirtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01'
     lifecycle: 'temporary-validation'
   })
   identity: {
-    type: 'userAssigned'
+    type: 'UserAssigned'
     userAssignedIdentities: {
       '${workloadIdentity.id}': {}
     }
