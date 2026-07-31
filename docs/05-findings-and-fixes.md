@@ -72,8 +72,20 @@ This file will contain only issues observed in the live lab. Planned “mistakes
 - **Expected:** Azure what-if would return the proposed resource change set.
 - **Actual:** Compute validation returned `SkuNotAvailable` across multiple small and general-purpose VM sizes and regions. A direct provider check then showed the required workload providers were not registered.
 - **Evidence:** sanitized Cloud Shell results summarized in the lab journal.
-- **Root cause:** the subscription was active, but its workload resource-provider namespaces had not completed registration. Whether registration fully resolves every capacity result remains to be retested.
-- **Change:** add a non-mutating provider-readiness guard that lists missing providers and stops before template validation.
-- **Retest:** pending deliberate provider registration. No resource deployment was attempted.
+- **Root cause:** the subscription was active, but its workload resource-provider namespaces had not started registration.
+- **Change:** register only the seven required providers and add a non-mutating guard. The guard rejects `NotRegistered` but allows `Registering`, because Azure completes registration region by region.
+- **Retest:** passed. Registration requests were accepted and regional template validation proceeded.
 - **Lesson:** subscription state, provider registration, regional capacity, and quota are separate preflight checks.
-- **Remaining limitation:** live workload evidence remains blocked until provider registration and a clean what-if succeed.
+- **Remaining limitation:** provider readiness did not resolve the separate VM capacity restriction; see F-06.
+
+### F-06 — Planned VM SKUs were capacity-restricted
+
+- **Observed (UTC):** 2026-07-31 07:34.
+- **Expected:** the low-cost `Standard_B1s` validator would pass East US preflight.
+- **Actual:** Azure rejected `Standard_B1s` and `Standard_D2ls_v5` after provider registration. A bounded subscription SKU inventory showed unrestricted version-seven D-series options.
+- **Evidence:** sanitized what-if and SKU-inventory results summarized in the lab journal.
+- **Root cause:** the subscription's current East US capacity restrictions did not permit the originally planned SKUs.
+- **Change:** use the smallest suitable unrestricted option found, `Standard_D2ls_v7`, and raise the documented cost ceiling.
+- **Retest:** passed. Azure what-if reported 26 resources to create, with no modifications or deletions.
+- **Lesson:** a cheap catalog SKU is not deployable evidence until the target subscription and region accept it.
+- **Remaining limitation:** what-if proves the proposed management-plane changes only. Deployment and data-plane validation still require explicit cost approval.
