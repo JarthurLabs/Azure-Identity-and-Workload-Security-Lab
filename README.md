@@ -1,12 +1,21 @@
 # CareBridge Azure Identity & Workload Security Lab
 
-A small, evidence-led Azure lab that connects Microsoft Entra identity controls to a protected Azure workload for CareBridge Analytics, a fictional healthcare SaaS team.
+A compact Azure security lab that connects Microsoft Entra identity controls to a protected workload for CareBridge Analytics, a fictional healthcare SaaS team.
 
 [![Validate lab files](https://github.com/JarthurLabs/Azure-Identity-and-Workload-Security-Lab/actions/workflows/validate.yml/badge.svg)](https://github.com/JarthurLabs/Azure-Identity-and-Workload-Security-Lab/actions/workflows/validate.yml)
 
-The scenario is intentionally modest: a fictional healthcare analytics team needs controlled administrator access, a workload identity that does not use stored credentials, private access to secrets and storage, and enough logging to verify the controls. The goal is to demonstrate sound junior-level cloud security practice after SC-300 and SC-500 study—not to present this as production or enterprise architecture experience.
+The scenario stays deliberately small: the team needs controlled administrator access, a workload identity with no stored credentials, private access to secrets and storage, and enough logging to prove the controls worked. This shows hands-on cloud security practice after SC-300 and SC-500 study. It is not presented as production or enterprise architecture experience.
 
-> **Current state:** the approved East US workload was deployed and tested on 2026-07-31. Private DNS, managed-identity reads, the expected denied Blob write, and Log Analytics ingestion all passed. The validation VM, disk, and interface were removed, then full resource-group cleanup was independently verified. Earlier account and directory failures remain as historical evidence; Entra group authorization still needs a separate retest. See [findings and fixes](docs/05-findings-and-fixes.md).
+> **Current state:** the approved East US workload was deployed and tested on 2026-07-31. Private DNS, managed-identity reads, the expected denied Blob write, and Log Analytics ingestion passed. The temporary VM, disk, and network interface were removed, followed by verified deletion of the full resource group. The Azure workload portion is complete. Entra group authorization and license-dependent Conditional Access testing are still pending because the tested directory did not allow group administration. See [findings and fixes](docs/05-findings-and-fixes.md).
+
+## Five-minute reviewer path
+
+1. Start with the [managed-identity and private-path result](evidence/exports/azure-workload-validation.md).
+2. Check the [monitoring result](evidence/exports/monitoring-validation.md) to confirm logs reached Log Analytics.
+3. Read the [cleanup verification](evidence/exports/cleanup-verification.md), including the failed safety check and successful retest.
+4. Finish with [finding F-02](docs/05-findings-and-fixes.md#f-02--current-directory-principal-could-not-create-groups) for the Entra work that is still open.
+
+The failed prechecks stay in the repository on purpose. Azure had already supplied enough plot twists; quietly deleting the inconvenient parts would not improve the lab.
 
 ## What this lab is designed to prove
 
